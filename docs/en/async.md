@@ -1,35 +1,34 @@
-# Async basic
-Asynchronous programming in Python excels at handling network requests with high concurrency.
-Before using bilix in Python, you need to have some understanding of asynchronous programming in Python.
-The official Python [asyncio](https://docs.python.org/3/library/asyncio.html) library provides support for asynchronous I/O.
+# Async basics
 
-```python
-async def hello():
-    print("hello world")
-```
+bilix download methods are asynchronous and designed for high-concurrency network work.
 
-For an async function (async def), calling it will not directly execute the function but instead return a coroutine object.
-```python
-c = hello()
->>> c
-<coroutine object hello at 0x100a92540>
-
-```
-
-We can submit the coroutine obj to asyncio's event loop to execute it
+In Python, `async def` functions return coroutine objects that must be executed by an event loop:
 
 ```python
 import asyncio
 
->>> asyncio.run(c)
-"hello world"
+async def hello():
+    print('hello world')
+
+asyncio.run(hello())
 ```
 
-All download methods of bilix are asynchronous, so you can execute them like this
+bilix methods are also asynchronous:
+
 ```python
 import asyncio
 from bilix.sites.bilibili import DownloaderBilibili
 
-d = DownloaderBilibili()
-asyncio.run(d.get_video('url'))
+async def main():
+    async with DownloaderBilibili() as d:
+        await d.get_video('url')
+
+asyncio.run(main())
+```
+
+To show progress in Python, use `CLIProgress.start()` or the downloader's `progress` object:
+
+```python
+from bilix.progress.cli_progress import CLIProgress
+CLIProgress.start()
 ```

@@ -1,18 +1,24 @@
 # More
 
-## Community
+## Feedback
 
-If you find any bugs or other issues, feel free to raise an [Issue](https://github.com/HFrost0/bilix/issues).
+If you find any bugs or issues, please open an [Issue](https://github.com/HFrost0/bilix/issues).
 
-If you have new ideas or new feature requests，welcome to participate in
-the [Discussion](https://github.com/HFrost0/bilix/discussions)
+If you have new ideas or feature requests, join the [Discussion](https://github.com/HFrost0/bilix/discussions).
 
-If you find this project helpful, you can support the author by [Star](https://github.com/HFrost0/bilix/stargazers)🌟
+If this project helps you, please give a [Star](https://github.com/HFrost0/bilix/stargazers)🌟
 
-## Contribute
+## Contributing
 
-❤️ Welcome~ Details can be found in [Contributing](https://github.com/HFrost0/bilix/blob/master/CONTRIBUTING_EN.md)
+❤️ Contributions are welcome! See [CONTRIBUTING.md](https://github.com/HFrost0/bilix/blob/master/CONTRIBUTING.md)
 
-## Known Bugs 🤡
+## Available features
 
-When two video names are exactly the same, task conflicts occur but no error is reported.
+- `get_series`, `get_video`, `get_up`, `get_cate`, `get_favour`, `get_collect`, `info`.
+- `--subtitle`, `--dm`, `--image` for attachments.
+- `--time-range` for segment downloads.
+- `--language` / `--locale` / `-l` for Chinese and English help/log output.
+
+## Known issue
+
+If two video files have exactly the same name, task conflicts may occur without an error.

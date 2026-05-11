@@ -1,20 +1,39 @@
 # Installation
-bilix is a powerful Python asynchronous video download tool that requires two steps to install:
 
-1. pip install（require python >= 3.8）
-   ```shell
-   pip install bilix
-   ```
-   If you are a macOS user, you can also use `brew` to install:
-   ```shell
-    brew install bilix
-    ```
+bilix is a Python asynchronous downloader. It supports Python 3.8 and above.
 
-2. [FFmpeg](https://ffmpeg.org) ：A command-line video tool for compositing downloaded audio and video
+## Install bilix
 
-    * For macOS, it can be installed via `brew install ffmpeg`
-    * For Windows, please go to the official website https://ffmpeg.org/download.html#build-windows , you need to configure environment variables after installation
+```shell
+pip install bilix
+```
 
-   ::: info
-   Just make sure that you can call the `ffmpeg` command from the command line in the end.
-   :::
+For development and source editing, install in editable mode:
+
+```shell
+pip install -e .
+```
+
+macOS users can also try Homebrew:
+
+```shell
+brew install bilix
+```
+
+## Install FFmpeg
+
+Some downloads require FFmpeg for audio/video merging, m3u8 downloads, and media processing.
+
+* macOS:
+
+```shell
+brew install ffmpeg
+```
+
+* Windows:
+
+Download a build from https://ffmpeg.org/download.html\#build-windows and add `ffmpeg` to your PATH.
+
+::: info
+Make sure you can run `ffmpeg` from the command line after installation.
+:::

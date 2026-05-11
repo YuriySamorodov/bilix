@@ -1,21 +1,38 @@
 # 安装
-bilix是一个强大的Python异步视频下载工具，安装它需要完成两个步骤：
+bilix 是一个基于 Python 的异步下载工具，建议使用 Python 3.8 及以上版本。
 
-1. pip安装（需要python3.8及以上）
-   ```shell
-   pip install bilix
-   ```
-   
-   如果你是macOS用户，也可以使用`brew`安装：
-   ```shell
-    brew install bilix
-    ```
+## 安装 bilix
 
-2. [FFmpeg](https://ffmpeg.org) ：一个命令行视频工具，用于合成下载的音频和视频
+```shell
+pip install bilix
+```
 
-    * macOS 下可以通过`brew install ffmpeg`进行安装。
-    * Windows 下载请至官网 https://ffmpeg.org/download.html#build-windows ，安装好后需要配置环境变量。
+如果你想参与开发或修改源码，可使用可编辑安装：
 
-   ::: info
-   最终确保在命令行中可以调用`ffmpeg`命令即可。
-   :::
+```shell
+pip install -e .
+```
+
+macOS 用户也可以视情况尝试 Homebrew 安装：
+
+```shell
+brew install bilix
+```
+
+## 安装 FFmpeg
+
+部分视频处理需要 FFmpeg，例如音视频合并、m3u8 下载和音频提取。
+
+* macOS：
+
+```shell
+brew install ffmpeg
+```
+
+* Windows：
+
+访问 https://ffmpeg.org/download.html#build-windows 下载并安装，然后配置环境变量。
+
+::: info
+安装完成后，请确保终端中可以直接运行 `ffmpeg`。
+:::

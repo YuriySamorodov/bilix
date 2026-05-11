@@ -5,26 +5,15 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/HFrost0/bilix)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/bilix?label=pypi%20downloads&style=flat-square)
 
-⚡️Lightning-fast asynchronous download tool for bilibili and more
-
+⚡️ Lightning-fast asynchronous downloader for Bilibili and more.
 
 ## Features
 
-### ⚡️ Fast & Async
-
-Asynchronous high concurrency support, controllable concurrency and speed settings.
-
-### 😉 Lightweight & User-friendly
-
-Lightweight user-friendly CLI with progress notification, focusing on core functionality.
-
-### 📝 Fully-featured
-
-Submissions, anime, TV Series, video clip, audio, favourite, danmaku ,cover...
-
-### 🔨 Extensible
-
-Extensible Python module suitable for more download scenarios.
+- Async native download engine with high concurrency and speed control.
+- Full CLI and Python API support for series, videos, up hosts, categories, favorites, collections, and info lookups.
+- Built-in Chinese/English help and log localization via `--language`, `--locale`, or `-l`.
+- Extensible site plugin architecture under `bilix/sites`.
+- Download attachments such as subtitles, cover images, and danmaku.
 
 ## Install
 
@@ -32,7 +21,13 @@ Extensible Python module suitable for more download scenarios.
 pip install bilix
 ```
 
-for macOS, you can also install `bilix` by `brew`
+For development or local editing:
+
+```shell
+pip install -e .
+```
+
+On macOS, `bilix` may also be available via Homebrew:
 
 ```shell
 brew install bilix
@@ -40,38 +35,40 @@ brew install bilix
 
 ## Usage Example
 
-* If you prefer to use command line interface (cli)
+### CLI
 
 ```shell
-bilix v 'url'
+bilix v 'https://www.bilibili.com/video/BV1xx411q7xx'
+bilix -l en -h
 ```
 
-> `v` is a method short alias for `get_video`
+`v` is a short alias for `get_video`.
 
-* If you prefer to code with python
+### Python
 
 ```python
-from bilix.sites.bilibili import DownloaderBilibili
 import asyncio
-
+from bilix.sites.bilibili import DownloaderBilibili
 
 async def main():
     async with DownloaderBilibili() as d:
-        await d.get_video('url')
-
+        await d.get_video('https://www.bilibili.com/video/BV1xx411q7xx')
 
 asyncio.run(main())
 ```
 
+## Help & Language
+
+Use `bilix -h` to show the CLI help text. Use `-l en` or `--language en` to display help and logs in English.
+
 ## Community
 
-If you find any bugs or other issues, feel free to raise an [Issue](https://github.com/HFrost0/bilix/issues).
+If you find any bugs or issues, feel free to raise an [Issue](https://github.com/HFrost0/bilix/issues).
 
-If you have new ideas or new feature requests👍，welcome to participate in
-the [Discussion](https://github.com/HFrost0/bilix/discussions)
+If you have ideas or feature requests, join the [Discussion](https://github.com/HFrost0/bilix/discussions).
 
-If you find this project helpful, you can support the author by [Star](https://github.com/HFrost0/bilix/stargazers)🌟
+If you find this project useful, please give it a [Star](https://github.com/HFrost0/bilix/stargazers)🌟
 
 ## Contribute
 
-❤️ Welcome! Details can be found in [Contributing](https://github.com/HFrost0/bilix/blob/master/CONTRIBUTING_EN.md)
+❤️ Welcome! Details can be found in [CONTRIBUTING_EN.md](CONTRIBUTING_EN.md)
