@@ -10,6 +10,7 @@ import httpx
 from typing import Union, Sequence, Tuple, List
 from bilix.exception import APIError, APIParseError
 from bilix.log import logger
+from bilix.i18n import t
 
 
 async def merge_files(file_list: List[Path], new_path: Path):
@@ -41,11 +42,11 @@ async def req_retry(client: httpx.AsyncClient, url_or_urls: Union[str, Sequence[
             pre_exc = e
             await asyncio.sleep(1. * (times + 1))
         except Exception as e:
-            logger.warning(f'{method} {e.__class__.__name__} 未知异常 url: {url}')
+            logger.warning(t('log.http.unknown_exception', method=method, exception=e.__class__.__name__, url=url))
             raise e
         else:
             return res
-    logger.error(f"{method} 超过重复次数 {url_or_urls}")
+    logger.error(t('log.http.retry_exceeded', method=method, url_or_urls=url_or_urls))
     raise pre_exc
 
 

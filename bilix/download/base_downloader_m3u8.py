@@ -11,6 +11,7 @@ from Crypto.Cipher import AES
 from m3u8 import Segment
 from bilix.download.base_downloader import BaseDownloader
 from bilix.download.utils import path_check, merge_files
+from bilix.i18n import t
 from bilix import ffmpeg
 from .utils import req_retry
 
@@ -86,7 +87,7 @@ class BaseDownloaderM3u8(BaseDownloader):
             path = path.with_stem(f"{path.stem}-{time_range[0]}-{time_range[1]}")
         exist, path = path_check(path)
         if exist:
-            self.logger.info(f"[green]已存在[/green] {path.name}")
+            self.logger.info(t('log.exists', name=path.name))
             return path
         async with self.v_sema:
             task_id = await self.progress.add_task(total=None, description=path.name)
@@ -136,7 +137,7 @@ class BaseDownloaderM3u8(BaseDownloader):
             # to save key frame, use 0 as start time instead of s, clip will be a little longer than expected
             await ffmpeg.time_range_clip(path, 0, end_time - start_time + s, path_tmp)
             os.rename(path_tmp, path)
-        self.logger.info(f"[cyan]已完成[/cyan] {path.name}")
+        self.logger.info(t('log.completed', name=path.name))
         await self.progress.update(task_id, visible=False)
         return path
 
@@ -181,7 +182,7 @@ class BaseDownloaderM3u8(BaseDownloader):
                 except (httpx.HTTPStatusError, httpx.TransportError):
                     continue
             else:
-                raise Exception(f"STREAM 超过重复次数 {seg_url}")
+                raise Exception(t('log.stream.retry_exceeded', name=seg_url))
         content = self._after_seg(seg, content)
         # in case encrypted
         if seg.key:

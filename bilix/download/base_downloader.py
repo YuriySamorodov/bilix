@@ -13,6 +13,7 @@ import httpx
 from bilix.cli.assign import auto_assemble
 from bilix.log import logger as dft_logger
 from bilix.download.utils import req_retry, path_check
+from bilix.i18n import t
 from bilix.progress.abc import Progress
 from bilix.progress.cli_progress import CLIProgress
 from bilix.exception import HandleMethodError
@@ -141,13 +142,13 @@ class BaseDownloader(metaclass=BaseDownloaderMeta):
         path = path.with_name(path.name + suffix)
         exist, path = path_check(path)
         if exist:
-            self.logger.info(f'[green]已存在[/green] {path.name}')
+            self.logger.info(t('log.exists', name=path.name))
             return path
         res = await req_retry(self.client, url)
         content = convert_func(res.content) if convert_func else res.content
         async with aiofiles.open(path, 'wb') as f:
             await f.write(content)
-        self.logger.info(f'[cyan]已完成[/cyan] {path.name}')
+        self.logger.info(t('log.completed', name=path.name))
         return path
 
     @asynccontextmanager

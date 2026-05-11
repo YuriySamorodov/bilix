@@ -11,6 +11,7 @@ from bilix.download.base_downloader_part import BaseDownloaderPart
 from bilix._process import SingletonPPE
 from bilix.utils import legal_title, cors_slice, valid_sess_data, t2s, json2srt
 from bilix.download.utils import req_retry, path_check
+from bilix.i18n import t
 from bilix.exception import HandleMethodError, APIUnsupportedError, APIResourceError, APIError
 from bilix.cli.assign import kwargs_filter, auto_assemble
 from bilix import ffmpeg
@@ -347,8 +348,7 @@ class DownloaderBilibili(BaseDownloaderPart):
                 try:  # choose video quality
                     video, audio = video_info.dash.choose_quality(quality, codec)
                 except KeyError:
-                    self.logger.warning(
-                        f"{task_name} 清晰度<{quality}> 编码<{codec}>不可用，请检查输入是否正确或是否需要大会员")
+                    self.logger.warning(t('log.bilibili.quality_unavailable', task_name=task_name, quality=quality, codec=codec))
                 else:
                     tmp: List[Tuple[api.Media, Path]] = []
                     # 1. only video
@@ -358,7 +358,7 @@ class DownloaderBilibili(BaseDownloaderPart):
                     elif audio and not only_audio:
                         exists, media_path = path_check(path / f'{media_name}.mp4')
                         if exists:
-                            self.logger.info(f'[green]已存在[/green] {media_path.name}')
+                            self.logger.info(t('log.exists', name=media_path.name))
                         else:
                             tmp.append((video, path / f'{media_name}-v'))
                             tmp.append((audio, path / f'{media_name}-a'))
@@ -390,8 +390,7 @@ class DownloaderBilibili(BaseDownloaderPart):
                                                                   task_id=task_id))
 
             elif video_info.other:
-                self.logger.warning(
-                    f"{task_name} 未解析到dash资源，转入durl mp4/flv下载（不需要会员的电影/番剧预览，不支持dash的视频）")
+                self.logger.warning(t('log.bilibili.dash_fallback', task_name=task_name))
                 media_name = base_name
                 if len(video_info.other) == 1:
                     m = video_info.other[0]
@@ -400,7 +399,7 @@ class DownloaderBilibili(BaseDownloaderPart):
                 else:
                     exist, media_path = path_check(path / f'{media_name}.mp4')
                     if exist:
-                        self.logger.info(f'[green]已存在[/green] {media_path.name}')
+                        self.logger.info(t('log.exists', name=media_path.name))
                     else:
                         p_sema = asyncio.Semaphore(self.part_concurrency)
 
@@ -413,7 +412,7 @@ class DownloaderBilibili(BaseDownloaderPart):
                             media_cors.append(_get_file(m, path / f))
                         await self.progress.update(task_id=task_id, upper=ffmpeg.concat)
             else:
-                self.logger.warning(f'{task_name} 需要大会员或该地区不支持')
+                self.logger.warning(t('log.bilibili.premium_or_region_unsupported', task_name=task_name))
             # additional task
             add_cors = []
             if image or subtitle or dm:
@@ -434,7 +433,7 @@ class DownloaderBilibili(BaseDownloaderPart):
 
         if upper := self.progress.tasks[task_id].fields.get('upper', None):
             await upper(path_lst, media_path)
-            self.logger.info(f'[cyan]已完成[/cyan] {media_path.name}')
+            self.logger.info(t('log.completed', name=media_path.name))
         await self.progress.update(task_id, visible=False)
 
     @staticmethod
@@ -471,7 +470,7 @@ class DownloaderBilibili(BaseDownloaderPart):
         file_path = path / file_name
         exist, file_path = path_check(file_path)
         if not update and exist:
-            self.logger.info(f"[green]已存在[/green] {file_name}")
+            self.logger.info(t('log.exists', name=file_name))
             return file_path
         dm_urls = await api.get_dm_urls(self.client, aid, cid)
         cors = [req_retry(self.client, dm_url) for dm_url in dm_urls]
@@ -482,7 +481,7 @@ class DownloaderBilibili(BaseDownloaderPart):
             content = await content
         async with aiofiles.open(file_path, 'wb') as f:
             await f.write(content)
-        self.logger.info(f"[cyan]已完成[/cyan] {file_name}")
+        self.logger.info(t('log.completed', name=file_name))
         return file_path
 
     async def get_subtitle(self, url, path=Path('.'), convert_func=json2srt, video_info=None):
