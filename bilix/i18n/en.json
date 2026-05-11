@@ -1,0 +1,13 @@
+{
+  "cli.dir.created": "Directory {path} cannot be found, auto created",
+  "cli.user.interrupt": "[cyan]Hint: interrupted by user, rerun the command to resume downloads",
+  "log.http.unknown_exception": "{method} {exception} unknown exception url: {url}",
+  "log.http.retry_exceeded": "{method} exceeded retry count {url_or_urls}",
+  "log.exists": "[green]Exists[/green] {name}",
+  "log.completed": "[cyan]Completed[/cyan] {name}",
+  "log.stream.retry_exceeded": "STREAM exceeded retry count {name}",
+  "log.bilibili.quality_unavailable": "{task_name} quality<{quality}> codec<{codec}> unavailable, please check your input or premium requirements",
+  "log.bilibili.dash_fallback": "{task_name} failed to parse DASH resources, falling back to durl mp4/flv downloads (preview for non-premium video, does not support DASH-only videos)",
+  "log.bilibili.premium_or_region_unsupported": "{task_name} requires premium access or is not supported in this region",
+  "cli.debug.enabled": "Debug enabled, more information will be shown"
+}

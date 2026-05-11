@@ -1,0 +1,13 @@
+{
+  "cli.dir.created": "目录 {path} 不存在，已自动创建",
+  "cli.user.interrupt": "[cyan]提示：用户中断，重复执行命令可继续下载",
+  "log.http.unknown_exception": "{method} {exception} 未知异常 url: {url}",
+  "log.http.retry_exceeded": "{method} 超过重复次数 {url_or_urls}",
+  "log.exists": "[green]已存在[/green] {name}",
+  "log.completed": "[cyan]已完成[/cyan] {name}",
+  "log.stream.retry_exceeded": "STREAM 超过重复次数 {name}",
+  "log.bilibili.quality_unavailable": "{task_name} 清晰度<{quality}> 编码<{codec}>不可用，请检查输入是否正确或是否需要大会员",
+  "log.bilibili.dash_fallback": "{task_name} 未解析到dash资源，转入durl mp4/flv下载（不需要会员的电影/番剧预览，不支持dash的视频）",
+  "log.bilibili.premium_or_region_unsupported": "{task_name} 需要大会员或该地区不支持",
+  "cli.debug.enabled": "Debug 开启，更多信息将显示"
+}
