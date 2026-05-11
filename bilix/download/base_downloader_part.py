@@ -165,7 +165,7 @@ class BaseDownloaderPart(BaseDownloader):
             exist, path = path_check(path)
             if exist:
                 if not upper:
-                    self.logger.info(f'[green]已存在[/green] {path.name}')
+                    self.logger.info(t('log.exists', name=path.name))
                 return path
 
         total, req_filename = await self._pre_req(urls)

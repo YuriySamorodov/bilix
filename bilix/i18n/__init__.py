@@ -50,19 +50,11 @@ def t(key: str, /, **kwargs) -> str:
     return template.format(**kwargs)
 
 
-def help_text(key: str, /, language: str | None = None, **kwargs) -> str:
-    language = _normalize_language(language)
-    if language is not None:
-        translations = _load_translations(language)
-        return translations.get(key, key).format(**kwargs)
-    zh = _load_translations('zh').get(key, key)
-    en = _load_translations('en').get(key, key)
-    if zh and en:
-        return f"{zh}\n{en}"
-    return zh or en
-
-
-def bilingual(zh: str, en: str, language: str | None = None) -> str:
+def help_text(zh: str, en: str, language: str | None = None) -> str:
     if language is None:
         return f"{zh}\n{en}"
     return zh if _normalize_language(language) == 'zh' else en
+
+
+def bilingual(zh: str, en: str, language: str | None = None) -> str:
+    return help_text(zh, en, language)

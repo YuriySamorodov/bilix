@@ -8,6 +8,7 @@ from rich import print as rprint
 from bilix.utils import convert_size
 from bilix.download.utils import req_retry
 from bilix.cli.assign import kwargs_filter
+from bilix.i18n import t
 
 
 class InformerBilibili(DownloaderBilibili):
@@ -35,7 +36,7 @@ class InformerBilibili(DownloaderBilibili):
     async def info_video(self, url: str):
         video_info = await api.get_video_info(self.client, url)
         if video_info.dash is None and video_info.other is None:
-            return logger.warning(f'{video_info.title} 需要大会员或该地区不支持')
+            return logger.warning(t('log.bilibili.video_requires_premium', title=video_info.title))
         elif video_info.other and video_info.dash is None:
             return rprint(video_info.other)  # todo: beautify durl info
 

@@ -9,5 +9,9 @@
   "log.bilibili.quality_unavailable": "{task_name} 清晰度<{quality}> 编码<{codec}>不可用，请检查输入是否正确或是否需要大会员",
   "log.bilibili.dash_fallback": "{task_name} 未解析到dash资源，转入durl mp4/flv下载（不需要会员的电影/番剧预览，不支持dash的视频）",
   "log.bilibili.premium_or_region_unsupported": "{task_name} 需要大会员或该地区不支持",
+  "log.bilibili.cate_not_found": "未找到分区 {cate_name}",
+  "log.bilibili.cate_not_subbank": "{cate_name} 是主分区，仅支持子分区，试试 {sub_names}",
+  "log.bilibili.video_requires_premium": "{title} 需要大会员或该地区不支持",
+  "log.stream.transport_issue": "STREAM {exception} 异常可能由于网络条件不佳或并发数过大导致，若重复出现请考虑降低并发数",
   "cli.debug.enabled": "Debug 开启，更多信息将显示"
 }

@@ -194,10 +194,10 @@ class DownloaderBilibili(BaseDownloaderPart):
         """
         cate_meta = await self.cate_meta
         if cate_name not in cate_meta:
-            return self.logger.error(f'未找到分区 {cate_name}')
+            return self.logger.error(t('log.bilibili.cate_not_found', cate_name=cate_name))
         if 'subChannelId' not in cate_meta[cate_name]:
             sub_names = [i['name'] for i in cate_meta[cate_name]['sub']]
-            return self.logger.error(f'{cate_name} 是主分区，仅支持子分区，试试 {sub_names}')
+            return self.logger.error(t('log.bilibili.cate_not_subbank', cate_name=cate_name, sub_names=sub_names))
         if self.hierarchy:
             path /= legal_title(f"【分区】{cate_name}")
             path.mkdir(parents=True, exist_ok=True)

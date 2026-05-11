@@ -9,5 +9,9 @@
   "log.bilibili.quality_unavailable": "{task_name} quality<{quality}> codec<{codec}> unavailable, please check your input or premium requirements",
   "log.bilibili.dash_fallback": "{task_name} failed to parse DASH resources, falling back to durl mp4/flv downloads (preview for non-premium video, does not support DASH-only videos)",
   "log.bilibili.premium_or_region_unsupported": "{task_name} requires premium access or is not supported in this region",
+  "log.bilibili.cate_not_found": "Partition {cate_name} not found",
+  "log.bilibili.cate_not_subbank": "{cate_name} is a top-level partition and only sub-partitions are supported. Try {sub_names}",
+  "log.bilibili.video_requires_premium": "{title} requires premium access or is not supported in this region",
+  "log.stream.transport_issue": "STREAM {exception} may be caused by poor network or high concurrency. If repeated, consider reducing concurrency",
   "cli.debug.enabled": "Debug enabled, more information will be shown"
 }
