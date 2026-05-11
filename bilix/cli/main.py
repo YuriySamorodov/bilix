@@ -110,7 +110,7 @@ def print_help(language=None):
     )
     table.add_row(
         "--order",
-        '[dark_cyan]str',
+        '[dark_cyan]choice',
         text("help.option.order"),
     )
     table.add_row(
@@ -182,6 +182,10 @@ class BasedQualityType(click.ParamType):
         else:
             return value  # relative choice like 0, 1, 2, 999...
 
+    def shell_complete(self, ctx, param, incomplete):
+        choices = ['1080', '1080p', '720', '720p', '480', '480p', '360', '360p', '0', '1', '2', '999']
+        return [click.shell_completion.CompletionItem(c) for c in choices if c.startswith(incomplete)]
+
 
 class BasedSpeedLimit(click.ParamType):
     name = "speed_limit"
@@ -250,7 +254,7 @@ class BasedTimeRange(click.ParamType):
 @click.option(
     '--order',
     'order',
-    type=str,
+    type=click.Choice(['pubdate', 'click', 'stow', 'scores', 'coin', 'dm'], case_sensitive=False),
     default='pubdate',
 )
 @click.option(
