@@ -129,6 +129,24 @@ def test_normalize_subtitle_url():
     assert api._normalize_subtitle_url('test.com/file') == 'http://test.com/file'
 
 
+def test_extract_subtitle_info_includes_ai_subtitles():
+    subtitle_data = {
+        'subtitles': [
+            {'subtitle_url': '//static.example.com/original.vtt', 'lan_doc': '中文（自动）'},
+        ],
+        'ai_subtitle': {
+            'subtitles': [
+                {'subtitle_url': '/ai/example.json', 'lan_doc': '中文（AI字幕）'},
+            ]
+        },
+    }
+
+    assert api._extract_subtitle_info(subtitle_data) == [
+        ['http://static.example.com/original.vtt', '中文（自动）'],
+        ['https://www.bilibili.com/ai/example.json', '中文（AI字幕）'],
+    ]
+
+
 @pytest.mark.asyncio
 async def test_get_dm_info():
     data = await api.get_video_info(client,

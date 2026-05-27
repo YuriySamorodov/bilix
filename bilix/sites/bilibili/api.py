@@ -548,12 +548,36 @@ def _normalize_subtitle_url(subtitle_url: str) -> str:
 
 @raise_api_error
 async def get_subtitle_info(client: httpx.AsyncClient, bvid, cid):
-    params = {'bvid': bvid, 'cid': cid}
+    params = {'bvid': bvid, 'cid': cid, 'fnval': 4048}
     res = await req_retry(client, 'https://api.bilibili.com/x/player/v2', params=params)
     info = json.loads(res.text)
     if info['code'] == -400:
         raise APIError(f'未找到字幕信息', params)
-    return [[_normalize_subtitle_url(i['subtitle_url']), i['lan_doc']] for i in info['data']['subtitle']['subtitles']]
+    return _extract_subtitle_info(info['data'].get('subtitle', {}))
+
+
+def _extract_subtitle_info(subtitle_data: dict) -> List[List[str]]:
+    subtitles = []
+    seen = set()
+
+    def add_items(items):
+        for item in items or []:
+            subtitle_url = item.get('subtitle_url')
+            lan_doc = item.get('lan_doc')
+            if not subtitle_url or not lan_doc:
+                continue
+            normalized_item = [_normalize_subtitle_url(subtitle_url), lan_doc]
+            key = tuple(normalized_item)
+            if key not in seen:
+                seen.add(key)
+                subtitles.append(normalized_item)
+
+    if isinstance(subtitle_data, dict):
+        add_items(subtitle_data.get('subtitles'))
+        ai_subtitle = subtitle_data.get('ai_subtitle')
+        if isinstance(ai_subtitle, dict):
+            add_items(ai_subtitle.get('subtitles'))
+    return subtitles
 
 
 @raise_api_error

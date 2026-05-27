@@ -61,7 +61,8 @@ class DownloaderBilibili(BaseDownloaderPart):
             logger=logger,
             part_concurrency=part_concurrency,
         )
-        client.cookies.set('SESSDATA', valid_sess_data(sess_data))
+        if sess_data:
+            client.cookies.set('SESSDATA', valid_sess_data(sess_data))
         self._cate_meta = None
         self.v_sema = asyncio.Semaphore(video_concurrency)
         self.api_sema = asyncio.Semaphore(video_concurrency)
