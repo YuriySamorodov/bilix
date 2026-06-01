@@ -1,0 +1,54 @@
+bilix get_video https://www.bilibili.com/video/BV18CquBvEBg/\?vd_source\=13bf320f7520f7bd69c461696de6c40b -d . --subtitle --from-browser chrome ─╯
+INFO     已完成 MG4：半固态电池表现如何，冬天实测一下！-Português.srt
+INFO     已完成 MG4：半固态电池表现如何，冬天实测一下！-Español.srt
+INFO     已完成 MG4：半固态电池表现如何，冬天实测一下！-English.srt
+INFO     已完成 MG4：半固态电池表现如何，冬天实测一下！-中文.srt
+INFO     已完成 MG4：半固态电池表现如何，冬天实测一下！-日本語.srt
+WARNING  STREAM Server error '503 Service Unavailable' for url
+         'https://upos-hz-mirrorakam.akamaized.net/upgcxcode/73/47/35235104773/35235104773-1-30080.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEqxTEto8BT
+         rNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0
+         B599M=&uipk=5&mid=3706987181247165&oi=1315770662&deadline=1780317233&os=akam&nbs=1&platform=pc&trid=4772513aa0984ce5be3d0c8ea95e0a9u&gen=play
+         urlv3&og=hw&upsig=2c1389abd1d0ac7d055f14796502e3bf&uparams=e,uipk,mid,oi,deadline,os,nbs,platform,trid,gen,og&hdnts=exp=1780317233~hmac=18094
+         bdc7fba755b7263132854dc52c553f4eb27aeace702ac55d2e38dd8b575&bvc=vod&nettype=0&bw=3295305&lrs=0&buvid=2022DBB0-3067-CAEA-C8E2-C564254E70D93843
+         4infoc&build=0&dl=0&f=u_0_0&qn_dyeid=355bb4c4040ae21a0086d37a6a1d6011&agrr=1&orderid=0,2'
+         For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
+WARNING  STREAM Server error '503 Service Unavailable' for url
+         'https://upos-hz-mirrorakam.akamaized.net/upgcxcode/73/47/35235104773/35235104773-1-30080.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEqxTEto8BT
+         rNvN0GvT90W5JZMkX_YN0MvXg8gNEV4NC8xNEV4N03eN0B5tZlqNxTEto8BTrNvNeZVuJ10Kj_g2UB02J0mN0B5tZlqNCNEto8BTrNvNC7MTX502C8f2jmMQJ6mqF2fka1mqx6gqj0eN0
+         B599M=&uipk=5&mid=3706987181247165&oi=1315770662&deadline=1780317233&os=akam&nbs=1&platform=pc&trid=4772513aa0984ce5be3d0c8ea95e0a9u&gen=play
+         urlv3&og=hw&upsig=2c1389abd1d0ac7d055f14796502e3bf&uparams=e,uipk,mid,oi,deadline,os,nbs,platform,trid,gen,og&hdnts=exp=1780317233~hmac=18094
+         bdc7fba755b7263132854dc52c553f4eb27aeace702ac55d2e38dd8b575&bvc=vod&nettype=0&bw=3295305&lrs=0&buvid=2022DBB0-3067-CAEA-C8E2-C564254E70D93843
+         4infoc&build=0&dl=0&f=u_0_0&qn_dyeid=355bb4c4040ae21a0086d37a6a1d6011&agrr=1&orderid=0,2'
+         For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
+Traceback (most recent call last):
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/bin/bilix", line 6, in `<module>`
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1524, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1445, in main
+    rv = self.invoke(ctx)
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1308, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 877, in invoke
+    return callback(*args, **kwargs)
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/cli/main.py", line 391, in main
+    loop.run_until_complete(cor)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/local/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/sites/bilibili/downloader.py", line 433, in get_video
+    path_lst, _ = await asyncio.gather(asyncio.gather(*media_cors), asyncio.gather(*add_cors))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader.py", line 76, in wrapper
+    return await func(*new_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py", line 194, in get_file
+    file_list = await asyncio.gather(*cors)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py", line 233, in _get_file_part
+    raise Exception(t('log.stream.retry_exceeded', name=part_path.name))
+Exception: STREAM 超过重复次数 MG4：半固态电池表现如何，冬天实测一下！-v.72331966-108497948

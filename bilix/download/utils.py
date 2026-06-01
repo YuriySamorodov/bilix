@@ -9,7 +9,7 @@ import aiofiles
 import httpx
 from typing import Union, Sequence, Tuple, List
 from bilix.exception import APIError, APIParseError
-from bilix.log import logger
+from bilix.log import logger, log_event
 from bilix.i18n import t
 
 
@@ -34,19 +34,23 @@ async def req_retry(client: httpx.AsyncClient, url_or_urls: Union[str, Sequence[
             res.raise_for_status()
         except httpx.TransportError as e:
             msg = f'{method} {e.__class__.__name__} url: {url}'
+            log_event('error', msg, url=url, exception=e)
             logger.warning(msg) if times > 0 else logger.debug(msg)
             pre_exc = e
             await asyncio.sleep(.1 * (times + 1))
         except httpx.HTTPStatusError as e:
             logger.warning(f'{method} {e.response.status_code} {url}')
+            log_event('error', f'{method} {e.response.status_code}', url=url, exception=e)
             pre_exc = e
             await asyncio.sleep(1. * (times + 1))
         except Exception as e:
             logger.warning(t('log.http.unknown_exception', method=method, exception=e.__class__.__name__, url=url))
+            log_event('error', t('log.http.unknown_exception', method=method, exception=e.__class__.__name__, url=url), url=url, exception=e)
             raise e
         else:
             return res
     logger.error(t('log.http.retry_exceeded', method=method, url_or_urls=url_or_urls))
+    log_event('error', t('log.http.retry_exceeded', method=method, url_or_urls=url_or_urls), url=url, exception=pre_exc)
     raise pre_exc
 
 

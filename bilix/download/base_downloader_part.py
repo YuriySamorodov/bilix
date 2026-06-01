@@ -10,6 +10,7 @@ import os
 from email.message import Message
 from pymp4.parser import Box
 from bilix.download.base_downloader import BaseDownloader
+from bilix.log import log_event
 from bilix.download.utils import path_check, merge_files
 from bilix import ffmpeg
 from bilix.i18n import t
@@ -86,6 +87,7 @@ class BaseDownloaderPart(BaseDownloader):
         exist, path = path_check(path)
         if exist:
             if not upper:
+                log_event('exists', t('log.exists', name=path.name), url=urls[0], file_size=path.stat().st_size)
                 self.logger.info(t('log.exists', name=path.name))
             return path
 
@@ -144,6 +146,7 @@ class BaseDownloaderPart(BaseDownloader):
             await ffmpeg.time_range_clip(path_tmp, start=0, t=end_time - start_time + s, output_path=path)
         else:
             await ffmpeg.time_range_clip(path_tmp, start=s, t=end_time - start_time, output_path=path)
+        log_event('completed', t('log.completed', name=path.name), url=urls[0], file_size=path.stat().st_size)
         if not upper:  # no upstream task
             await self.progress.update(task_id, visible=False)
             self.logger.info(t('log.completed', name=path.name))
@@ -193,6 +196,7 @@ class BaseDownloaderPart(BaseDownloader):
             cors.append(self._get_file_part(urls, path=path, part_range=(start, end), task_id=task_id))
         file_list = await asyncio.gather(*cors)
         await merge_files(file_list, new_path=path)
+        log_event('completed', t('log.completed', name=path.name), url=urls[0], file_size=path.stat().st_size)
         if not upper:
             await self.progress.update(task_id, visible=False)
             self.logger.info(t('log.completed', name=path.name))
@@ -230,5 +234,6 @@ class BaseDownloaderPart(BaseDownloader):
             except (httpx.HTTPStatusError, httpx.TransportError):
                 continue
         else:
+            log_event('error', t('log.stream.retry_exceeded', name=part_path.name), url=urls[url_idx], file_size=os.path.getsize(part_path) if part_path.exists() else '-')
             raise Exception(t('log.stream.retry_exceeded', name=part_path.name))
         return part_path

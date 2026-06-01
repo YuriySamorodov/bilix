@@ -20,6 +20,9 @@ features:
   - icon: 😉
     title: Lightweight & User-friendly
     details: Friendly CLI with progress notifications and a usable Python API
+  - icon: 🗂️
+    title: Daily Logs
+    details: Automatically writes a per-day logs directory with URL, file size, status, and errors
   - icon: 📝
     title: Fully-featured
     details: Supports submissions, anime, TV series, categories, favorites, collections, subtitles, danmaku, and more

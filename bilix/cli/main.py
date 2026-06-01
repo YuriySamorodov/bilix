@@ -7,7 +7,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 from .. import __version__
-from ..log import logger
+from ..log import logger, log_event
 from .assign import assign
 from ..progress.cli_progress import CLIProgress
 from ..utils import parse_bytes_str, s2t
@@ -391,7 +391,13 @@ def main(**kwargs):
         loop.run_until_complete(cor)
     except HandleError as e:  # method no match
         logger.error(e)
+        log_event('error', str(e), url='-', exception=e)
     except KeyboardInterrupt:
         logger.info(t('cli.user.interrupt'))
+        log_event('error', t('cli.user.interrupt'), url='-')
+    except Exception as e:
+        logger.exception(e)
+        log_event('error', str(e), url='-', exception=e)
+        raise
     finally:
         CLIProgress.stop()  # stop rich progress to ensure cursor is repositioned

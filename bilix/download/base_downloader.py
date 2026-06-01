@@ -11,7 +11,7 @@ import aiofiles
 import httpx
 
 from bilix.cli.assign import auto_assemble
-from bilix.log import logger as dft_logger
+from bilix.log import logger as dft_logger, log_event
 from bilix.download.utils import req_retry, path_check
 from bilix.i18n import t
 from bilix.progress.abc import Progress
@@ -142,12 +142,14 @@ class BaseDownloader(metaclass=BaseDownloaderMeta):
         path = path.with_name(path.name + suffix)
         exist, path = path_check(path)
         if exist:
+            log_event('exists', t('log.exists', name=path.name), url=url, file_size=path.stat().st_size)
             self.logger.info(t('log.exists', name=path.name))
             return path
         res = await req_retry(self.client, url)
         content = convert_func(res.content) if convert_func else res.content
         async with aiofiles.open(path, 'wb') as f:
             await f.write(content)
+        log_event('completed', t('log.completed', name=path.name), url=url, file_size=path.stat().st_size)
         self.logger.info(t('log.completed', name=path.name))
         return path
 
@@ -163,6 +165,7 @@ class BaseDownloader(metaclass=BaseDownloaderMeta):
         try:
             yield
         except httpx.HTTPStatusError as e:
+            log_event('error', f'STREAM {e}', url=str(e.request.url), exception=e)
             if e.response.status_code == 403:
                 self.logger.warning(f"STREAM slowing down since 403 forbidden {e}")
                 await asyncio.sleep(10. * (times + 1))
@@ -172,10 +175,12 @@ class BaseDownloader(metaclass=BaseDownloaderMeta):
             raise
         except httpx.TransportError as e:
             msg = t('log.stream.transport_issue', exception=e.__class__.__name__)
+            log_event('error', msg, url='-', exception=e)
             self.logger.warning(msg) if times > 2 else self.logger.debug(msg)
             await asyncio.sleep(.1 * (times + 1))
             raise
         except Exception as e:
+            log_event('error', f'STREAM Unexpected Exception class:{e.__class__.__name__} {e}', url='-', exception=e)
             self.logger.warning(f'STREAM Unexpected Exception class:{e.__class__.__name__} {e}')
             raise
         finally:

@@ -19,6 +19,13 @@ If this project helps you, please give a [Star](https://github.com/HFrost0/bilix
 - `--time-range` for segment downloads.
 - `--language` / `--locale` / `-l` for Chinese and English help/log output.
 
+## Logging
+
+- bilix creates a `logs` directory in the current working directory at runtime.
+- Logs are saved daily as `YYYY-MM-DD.log`, one file per day.
+- Each audit entry records the date, file or request URL, file size, and status.
+- Errors also include exception details and traceback output, which helps debug HTTP failures, retry exhaustion, and interrupted downloads.
+
 ## Known issue
 
 If two video files have exactly the same name, task conflicts may occur without an error.
