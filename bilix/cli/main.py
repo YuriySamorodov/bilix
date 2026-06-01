@@ -75,6 +75,11 @@ def print_help(language=None):
         text("help.option.dir")
     )
     table.add_row(
+        "--log-dir",
+        '[dark_cyan]str',
+        text("help.option.log_dir")
+    )
+    table.add_row(
         "-q --quality",
         '[dark_cyan]int | str',
         text("help.option.quality")

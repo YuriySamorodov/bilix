@@ -61,6 +61,15 @@ asyncio.run(main())
 
 Use `bilix -h` to show the CLI help text. Use `-l en` or `--language en` to display help and logs in English.
 
+## CLI Options
+
+A few commonly-used CLI options (see `bilix -h` for the full list):
+
+- **`-l`, `--language`**: Display help and logs in the specified language (e.g. `en`, `zh`).
+- **`-d`, `--dir`**: Output download directory for files.
+- **`--log-dir`**: Directory to save per-day audit logs (default: `logs`). If a relative path is provided, it is resolved inside the output directory specified by `-d`/`--dir`.
+- **`-h`, `--help`**: Show help text.
+
 ## Community
 
 If you find any bugs or issues, feel free to raise an [Issue](https://github.com/HFrost0/bilix/issues).
