@@ -223,7 +223,7 @@ class BasedTimeRange(click.ParamType):
     'log_dir',
     type=Path,
     default=DEFAULT_AUDIT_DIR,
-    help='Directory to write audit logs. Default: logs under the bilix script directory. If relative and explicitly provided, it will be created under the download output path.',
+    help='Directory to write audit logs. Default: logs under the bilix project root. If relative and explicitly provided, it will be created under the download output path.',
 )
 @click.option(
     '-q',
@@ -408,6 +408,7 @@ def main(**kwargs):
         else:
             audit_dir = log_dir_opt if log_dir_opt.is_absolute() else (kwargs['path'] / log_dir_opt)
         get_audit_logger(audit_dir)
+        logger.info(t('cli.audit_log_dir', path=audit_dir))
         executor, cor = assign(kwargs)
         loop.run_until_complete(cor)
     except HandleError as e:  # method no match

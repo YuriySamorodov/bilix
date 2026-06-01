@@ -21,11 +21,11 @@ If this project helps you, please give a [Star](https://github.com/HFrost0/bilix
 
 ## Logging
 
-- bilix creates a `logs` directory under the bilix package directory at runtime by default.
+- bilix creates a `logs` directory under the bilix project root at runtime by default.
 - Logs are saved daily as `YYYY-MM-DD.log`, one file per day.
 - Each audit entry records the date, file or request URL, file size, and status.
 - Errors also include exception details and traceback output, which helps debug HTTP failures, retry exhaustion, and interrupted downloads.
-- Use the `--log-dir` CLI option to set the logs directory. If a relative path is provided it will be created under the download output directory specified by `-d/--dir`. By default it uses `logs` under the bilix package directory.
+- Use the `--log-dir` CLI option to set the logs directory. If a relative path is provided it will be created under the download output directory specified by `-d/--dir`. By default it uses `logs` under the bilix project root.
 
 ## Known issue
 

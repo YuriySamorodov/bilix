@@ -1,5 +1,6 @@
 {
   "cli.dir.created": "Directory {path} cannot be found, auto created",
+  "cli.audit_log_dir": "Audit logs will be written to {path}",
   "cli.user.interrupt": "[cyan]Hint: interrupted by user, rerun the command to resume downloads",
   "log.http.unknown_exception": "{method} {exception} unknown exception url: {url}",
   "log.http.retry_exceeded": "{method} exceeded retry count {url_or_urls}",
@@ -19,7 +20,7 @@
   "help.method": "get_series or s:   download whole series videos (including multi-part uploads, anime, series, movies, documentaries), or single videos\nget_video or v:    download a specific video when you do not want other videos in the series\nget_up or up:      download all uploads from a user, supports count limits, keyword search, and sorting\nget_cate or cate:  download partition videos, supports count limits, keyword search, and sorting\nget_favour or fav: download videos from favorites, supports count limits, keyword search\nget_collect or col:download videos from a collection or playlist\ninfo:              print detailed resource information (e.g. likes, quality, codec)",
   "help.key": "For get_video/get_series, provide the video URL\nFor get_up, provide a Bilibili user page URL or user ID\nFor get_cate, provide a category name\nFor get_favour, provide a favorites page URL or favorites ID\nFor get_collect, provide a collection or playlist URL\nFor info, provide any resource URL",
   "help.option.dir": "Download directory. Defaults to ./videos and will be created if missing",
-  "help.option.log_dir": "Directory to write audit logs. Default: logs under the bilix package directory. If a relative path is provided explicitly, it will be created under the download output path.",
+  "help.option.log_dir": "Directory to write audit logs. Default: logs under the bilix project root. If a relative path is provided explicitly, it will be created under the download output path.",
   "help.option.quality": "Video quality. Default 0 is highest, larger values are lower quality. Use strings like '1080p'",
   "help.option.video_concurrency": "Maximum concurrent downloads. Default 3",
   "help.option.part_concurrency": "Maximum segment concurrency per media. Default 10",

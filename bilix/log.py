@@ -4,7 +4,7 @@ from pathlib import Path
 from rich.logging import RichHandler
 
 
-DEFAULT_AUDIT_DIR = Path(__file__).resolve().parent / 'logs'
+DEFAULT_AUDIT_DIR = Path(__file__).resolve().parent.parent / 'logs'
 
 
 class DailyFileHandler(logging.Handler):

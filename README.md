@@ -67,7 +67,7 @@ A few commonly-used CLI options (see `bilix -h` for the full list):
 
 - **`-l`, `--language`**: Display help and logs in the specified language (e.g. `en`, `zh`).
 - **`-d`, `--dir`**: Output download directory for files.
-- **`--log-dir`**: Directory to save per-day audit logs. By default it uses `logs` under the bilix package directory. If a relative path is provided explicitly, it is resolved inside the output directory specified by `-d`/`--dir`.
+- **`--log-dir`**: Directory to save per-day audit logs. By default it uses `logs` under the bilix project root. If a relative path is provided explicitly, it is resolved inside the output directory specified by `-d`/`--dir`.
 - **`-h`, `--help`**: Show help text.
 
 ## Community

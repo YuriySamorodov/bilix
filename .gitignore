@@ -15,3 +15,7 @@ node_modules
 .venv
 logs/
 bilix/logs/
+.mp4
+.mkv
+.flv
+MG4*
