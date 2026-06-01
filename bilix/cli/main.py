@@ -7,7 +7,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 from .. import __version__
-from ..log import logger, log_event
+from ..log import DEFAULT_AUDIT_DIR, logger, log_event
 from .assign import assign
 from ..progress.cli_progress import CLIProgress
 from ..utils import parse_bytes_str, s2t
@@ -222,8 +222,8 @@ class BasedTimeRange(click.ParamType):
     '--log-dir',
     'log_dir',
     type=Path,
-    default=Path('logs'),
-    help='Directory to write audit logs (relative to output path if not absolute). Default: logs',
+    default=DEFAULT_AUDIT_DIR,
+    help='Directory to write audit logs. Default: logs under the bilix script directory. If relative and explicitly provided, it will be created under the download output path.',
 )
 @click.option(
     '-q',

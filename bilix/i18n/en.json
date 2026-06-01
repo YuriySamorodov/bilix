@@ -19,7 +19,7 @@
   "help.method": "get_series or s:   download whole series videos (including multi-part uploads, anime, series, movies, documentaries), or single videos\nget_video or v:    download a specific video when you do not want other videos in the series\nget_up or up:      download all uploads from a user, supports count limits, keyword search, and sorting\nget_cate or cate:  download partition videos, supports count limits, keyword search, and sorting\nget_favour or fav: download videos from favorites, supports count limits, keyword search\nget_collect or col:download videos from a collection or playlist\ninfo:              print detailed resource information (e.g. likes, quality, codec)",
   "help.key": "For get_video/get_series, provide the video URL\nFor get_up, provide a Bilibili user page URL or user ID\nFor get_cate, provide a category name\nFor get_favour, provide a favorites page URL or favorites ID\nFor get_collect, provide a collection or playlist URL\nFor info, provide any resource URL",
   "help.option.dir": "Download directory. Defaults to ./videos and will be created if missing",
-  "help.option.log_dir": "Directory to write audit logs. If relative it will be created under the download output path. Default: logs",
+  "help.option.log_dir": "Directory to write audit logs. Default: logs under the bilix package directory. If a relative path is provided explicitly, it will be created under the download output path.",
   "help.option.quality": "Video quality. Default 0 is highest, larger values are lower quality. Use strings like '1080p'",
   "help.option.video_concurrency": "Maximum concurrent downloads. Default 3",
   "help.option.part_concurrency": "Maximum segment concurrency per media. Default 10",

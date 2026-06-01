@@ -22,7 +22,7 @@ features:
     details: 友好的 CLI、进度提示和 Python API
   - icon: 🗂️
     title: 日志归档
-    details: 自动写入按天分文件的 logs 目录，记录 URL、文件大小、状态和错误信息
+    details: 自动写入 bilix 包目录下的 logs 目录，记录 URL、文件大小、状态和错误信息
   - icon: 📝
     title: 功能齐全
     details: 支持投稿、弹幕、收藏夹、分区、合集、切片、封面、音频下载等

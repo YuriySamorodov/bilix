@@ -4,6 +4,9 @@ from pathlib import Path
 from rich.logging import RichHandler
 
 
+DEFAULT_AUDIT_DIR = Path(__file__).resolve().parent / 'logs'
+
+
 class DailyFileHandler(logging.Handler):
     def __init__(self, log_dir: Path):
         super().__init__()
@@ -73,11 +76,9 @@ def get_logger():
 
 def get_audit_logger(log_dir: Path = None):
     audit_logger = logging.getLogger("bilix.audit")
-    requested_dir = Path(log_dir) if log_dir is not None else None
+    requested_dir = Path(log_dir) if log_dir is not None else DEFAULT_AUDIT_DIR
     # if exists and no requested_dir or requested_dir matches existing handler, return
     if audit_logger.handlers:
-        if requested_dir is None:
-            return audit_logger
         # check if existing DailyFileHandler uses same dir
         for h in audit_logger.handlers:
             if isinstance(h, DailyFileHandler) and h.log_dir == requested_dir:
@@ -92,7 +93,7 @@ def get_audit_logger(log_dir: Path = None):
 
     audit_logger.setLevel(logging.INFO)
     audit_logger.propagate = False
-    handler = DailyFileHandler(requested_dir or Path.cwd() / 'logs')
+    handler = DailyFileHandler(requested_dir)
     handler.addFilter(DefaultFieldsFilter())
     handler.setFormatter(logging.Formatter(
         "%(asctime)s | %(levelname)s | %(status)s | %(url)s | %(file_size)s | %(message)s",

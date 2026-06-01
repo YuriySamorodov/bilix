@@ -13,3 +13,5 @@ docs/.vitepress/dist
 docs/.vitepress/cache
 node_modules
 .venv
+logs/
+bilix/logs/
