@@ -214,6 +214,13 @@ class BasedTimeRange(click.ParamType):
     default='videos',
 )
 @click.option(
+    '--log-dir',
+    'log_dir',
+    type=Path,
+    default=Path('logs'),
+    help='Directory to write audit logs (relative to output path if not absolute). Default: logs',
+)
+@click.option(
     '-q',
     '--quality',
     'quality',
@@ -387,6 +394,15 @@ def main(**kwargs):
         if not kwargs['path'].exists():
             kwargs['path'].mkdir(parents=True)
             logger.info(t('cli.dir.created', path=kwargs['path']))
+        # initialize audit logger in the download output folder so users find logs alongside downloads
+        from ..log import get_audit_logger
+        # Resolve log dir: if user provided an absolute path use it; otherwise place under the output path
+        log_dir_opt = kwargs.get('log_dir')
+        if log_dir_opt is None:
+            audit_dir = kwargs['path'] / 'logs'
+        else:
+            audit_dir = log_dir_opt if log_dir_opt.is_absolute() else (kwargs['path'] / log_dir_opt)
+        get_audit_logger(audit_dir)
         executor, cor = assign(kwargs)
         loop.run_until_complete(cor)
     except HandleError as e:  # method no match
@@ -398,6 +414,5 @@ def main(**kwargs):
     except Exception as e:
         logger.exception(e)
         log_event('error', str(e), url='-', exception=e)
-        raise
     finally:
         CLIProgress.stop()  # stop rich progress to ensure cursor is repositioned

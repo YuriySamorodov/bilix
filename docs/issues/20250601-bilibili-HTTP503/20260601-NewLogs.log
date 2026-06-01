@@ -1,0 +1,102 @@
+bilix get_video https://www.bilibili.com/video/BV18CquBvEBg/\?vd_source\=13bf320f7520f7bd69c461696de6c40b -d . --subtitle --from-browser chrome ─╯
+ERROR    STREAM 超过重复次数 MG4：半固态电池表现如何，冬天实测一下！-v.72331966-108497948
+         ╭──────────────────────────────────────────────────── Traceback (most recent call last) ────────────────────────────────────────────────────╮
+         │ /Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/cli/main.py:391 in main                                                  │
+         │                                                                                                                                           │
+         │   388 │   │   │   kwargs['path'].mkdir(parents=True)                                                                                      │
+         │   389 │   │   │   logger.info(t('cli.dir.created', path=kwargs['path']))                                                                  │
+         │   390 │   │   executor, cor = assign(kwargs)                                                                                              │
+         │ ❱ 391 │   │   loop.run_until_complete(cor)                                                                                                │
+         │   392 │   except HandleError as e:  # method no match                                                                                     │
+         │   393 │   │   logger.error(e)                                                                                                             │
+         │   394 │   │   log_event('error', str(e), url='-', exception=e)                                                                            │
+         │                                                                                                                                           │
+         │ /usr/local/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py:719 in               │
+         │ run_until_complete                                                                                                                        │
+         │                                                                                                                                           │
+         │    716 │   │   if not future.done():                                                                                                      │
+         │    717 │   │   │   raise RuntimeError('Event loop stopped before Future completed.')                                                      │
+         │    718 │   │                                                                                                                              │
+         │ ❱  719 │   │   return future.result()                                                                                                     │
+         │    720 │                                                                                                                                  │
+         │    721 │   def stop(self):                                                                                                                │
+         │    722 │   │   """Stop running the event loop.                                                                                            │
+         │                                                                                                                                           │
+         │ /Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/sites/bilibili/downloader.py:433 in get_video                            │
+         │                                                                                                                                           │
+         │   430 │   │   │   │   │   │   width, height = 1920, 1080                                                                                  │
+         │   431 │   │   │   │   │   add_cors.append(self.get_dm(                                                                                    │
+         │   432 │   │   │   │   │   │   url, path=extra_path, convert_func=self._dm2ass_factory(width,                                              │
+         │       height), video_info=video_info))                                                                                                    │
+         │ ❱ 433 │   │   │   path_lst, _ = await asyncio.gather(asyncio.gather(*media_cors),                                                         │
+         │       asyncio.gather(*add_cors))                                                                                                          │
+         │   434 │   │                                                                                                                               │
+         │   435 │   │   if upper := self.progress.tasks[task_id].fields.get('upper', None):                                                         │
+         │   436 │   │   │   await upper(path_lst, media_path)                                                                                       │
+         │                                                                                                                                           │
+         │ /Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader.py:76 in wrapper                                │
+         │                                                                                                                                           │
+         │    73 │   │   │   elif 'path' in kwargs and isinstance(kwargs['path'], str):                                                              │
+         │    74 │   │   │   │   kwargs['path'] = Path(kwargs['path'])                                                                               │
+         │    75 │   │   │                                                                                                                           │
+         │ ❱  76 │   │   │   return await func(*new_args, **kwargs)                                                                                  │
+         │    77 │   │                                                                                                                               │
+         │    78 │   │   wrapper.__annotations__['path'] = Union[Path, str]                                                                          │
+         │    79 │   │   return wrapper                                                                                                              │
+         │                                                                                                                                           │
+         │ /Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py:197 in get_file                         │
+         │                                                                                                                                           │
+         │   194 │   │   │   start = i * part_length                                                                                                 │
+         │   195 │   │   │   end = (i + 1) * part_length - 1 if i < self.part_concurrency - 1 else total                                             │
+         │       - 1                                                                                                                                 │
+         │   196 │   │   │   cors.append(self._get_file_part(urls, path=path, part_range=(start, end),                                               │
+         │       task_id=task_id))                                                                                                                   │
+         │ ❱ 197 │   │   file_list = await asyncio.gather(*cors)                                                                                     │
+         │   198 │   │   await merge_files(file_list, new_path=path)                                                                                 │
+         │   199 │   │   log_event('completed', t('log.completed', name=path.name), url=urls[0],                                                     │
+         │       file_size=path.stat().st_size)                                                                                                      │
+         │   200 │   │   if not upper:                                                                                                               │
+         │                                                                                                                                           │
+         │ /Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py:238 in _get_file_part                   │
+         │                                                                                                                                           │
+         │   235 │   │   │   │   continue                                                                                                            │
+         │   236 │   │   else:                                                                                                                       │
+         │   237 │   │   │   log_event('error', t('log.stream.retry_exceeded', name=part_path.name),                                                 │
+         │       url=urls[url_idx], file_size=os.path.getsize(part_path) if part_path.exists() else '-')                                             │
+         │ ❱ 238 │   │   │   raise Exception(t('log.stream.retry_exceeded', name=part_path.name))                                                    │
+         │   239 │   │   return part_path                                                                                                            │
+         │   240                                                                                                                                     │
+         ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+         Exception: STREAM 超过重复次数 MG4：半固态电池表现如何，冬天实测一下！-v.72331966-108497948
+Traceback (most recent call last):
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/bin/bilix", line 6, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1524, in __call__
+    return self.main(*args, **kwargs)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1445, in main
+    rv = self.invoke(ctx)
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 1308, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/.venv/lib/python3.14/site-packages/click/core.py", line 877, in invoke
+    return callback(*args, **kwargs)
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/cli/main.py", line 391, in main
+    loop.run_until_complete(cor)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/local/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/sites/bilibili/downloader.py", line 433, in get_video
+    path_lst, _ = await asyncio.gather(asyncio.gather(*media_cors), asyncio.gather(*add_cors))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader.py", line 76, in wrapper
+    return await func(*new_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py", line 197, in get_file
+    file_list = await asyncio.gather(*cors)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yuriy.samorodov/src/github.com/YuriySamorodov/bilix/bilix/download/base_downloader_part.py", line 238, in _get_file_part
+    raise Exception(t('log.stream.retry_exceeded', name=part_path.name))
+Exception: STREAM 超过重复次数 MG4：半固态电池表现如何，冬天实测一下！-v.72331966-108497948

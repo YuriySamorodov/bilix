@@ -73,11 +73,26 @@ def get_logger():
 
 def get_audit_logger(log_dir: Path = None):
     audit_logger = logging.getLogger("bilix.audit")
+    requested_dir = Path(log_dir) if log_dir is not None else None
+    # if exists and no requested_dir or requested_dir matches existing handler, return
     if audit_logger.handlers:
-        return audit_logger
+        if requested_dir is None:
+            return audit_logger
+        # check if existing DailyFileHandler uses same dir
+        for h in audit_logger.handlers:
+            if isinstance(h, DailyFileHandler) and h.log_dir == requested_dir:
+                return audit_logger
+        # otherwise reconfigure handlers to use requested_dir
+        for h in list(audit_logger.handlers):
+            audit_logger.removeHandler(h)
+            try:
+                h.close()
+            except Exception:
+                pass
+
     audit_logger.setLevel(logging.INFO)
     audit_logger.propagate = False
-    handler = DailyFileHandler(log_dir or Path.cwd() / 'logs')
+    handler = DailyFileHandler(requested_dir or Path.cwd() / 'logs')
     handler.addFilter(DefaultFieldsFilter())
     handler.setFormatter(logging.Formatter(
         "%(asctime)s | %(levelname)s | %(status)s | %(url)s | %(file_size)s | %(message)s",
@@ -102,4 +117,3 @@ def log_event(status: str, message: str = "", *, url: str = "-", file_size=None,
 
 
 logger = get_logger()
-audit_logger = get_audit_logger()

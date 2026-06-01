@@ -25,6 +25,7 @@ If this project helps you, please give a [Star](https://github.com/HFrost0/bilix
 - Logs are saved daily as `YYYY-MM-DD.log`, one file per day.
 - Each audit entry records the date, file or request URL, file size, and status.
 - Errors also include exception details and traceback output, which helps debug HTTP failures, retry exhaustion, and interrupted downloads.
+- Use the `--log-dir` CLI option to set the logs directory. If a relative path is provided it will be created under the download output directory specified by `-d/--dir`. Default: `logs`.
 
 ## Known issue
 
